@@ -10,24 +10,25 @@ public class Main {
 		int n = Integer.parseInt(numbers[0]);
 		int m = Integer.parseInt(numbers[1]);
 		numbers = br.readLine().split(" ");
+		int[] nums = new int[n];
 		int sum = 0;
-		int[] sums = new int[n];
 		int cnt = 0;
+		int left = 0;
+		int right = 0;
 
-		for (int i = 0; i < n; i++) {
-			sum += Integer.parseInt(numbers[i]);
-			sums[i] = sum;
-		}
-
-		for (int i = 0; i < n; i++) {
-			for (int j = i; j < n; j++) {
-				int minus = i > 0 ? sums[i - 1] : 0;
-				if (sums[j] - minus == m) {
+		for (; right < n; right++) {
+			int number = Integer.parseInt(numbers[right]);
+			nums[right] = number;
+			sum += number;
+			while (sum >= m && left <= right) {
+				if (sum == m) {
 					cnt++;
 				}
+				sum -= nums[left];
+				left++;
 			}
 		}
-
+		
 		System.out.print(cnt);
 	}
 }
