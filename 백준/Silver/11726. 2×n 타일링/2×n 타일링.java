@@ -1,22 +1,42 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Main {
-    static int dp[] = new int[1001];
-
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = readInt();
 
-        int n = Integer.parseInt(br.readLine());
-
-        dp[1] = 1;
-        dp[2] = 2;
-        if(dp[n] == 0) {
-            for(int i = 3; i <= n; i++) {
-                dp[i] = (dp[i-1] + dp[i-2])%10007;
-            }
+        if (n == 1) {
+            System.out.println(1);
+            return;
         }
-        System.out.println(dp[n]);
+
+        int a = 1; // dp[i-2]
+        int b = 2; // dp[i-1]
+        int sum;
+
+        for (int i = 3; i <= n; i++) {
+            sum = a + b;
+            if (sum >= 10007) {
+                sum -= 10007;
+            }
+            a = b;
+            b = sum;
+        }
+
+        System.out.println(b);
+    }
+
+    static int readInt() throws IOException {
+        int n = 0;
+        int c = System.in.read();
+        
+        while (c <= 32) {
+            c = System.in.read();
+        }
+        
+        while (c > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+            c = System.in.read();
+        }
+        return n;
     }
 }
